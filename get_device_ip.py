@@ -1,10 +1,3 @@
-"""
-__author__   = ilker MANSUR imansur@btegitim.com
-__purpose__  = Check agents and route call to alternate anoncement
-__version__  = 1.0
-
-"""
-
 # Import Library
 from zeep import Client
 from zeep.cache import SqliteCache
@@ -18,10 +11,13 @@ from urllib3.exceptions import InsecureRequestWarning
 from lxml import etree
 import time
 
+##################################################################################################################
 # Credential for CUCM AXL Application user
 axlusername = 'axluser'
 axlpassword = 'Aa123456'
 fqdn = '192.168.85.80'
+device_name = 'SEPAC7E8AB69C2C'
+##################################################################################################################
 
 session = Session()
 session.verify = False
@@ -41,7 +37,7 @@ def show_history():
         print(etree.tostring(item["envelope"], encoding="unicode", pretty_print=True))  
 
 
-def get_device_ip(device_name):
+def get_device_ip(device_name=device_name):
     """
     The function `get_device_ip` retrieves the IP address of a specified device using a selection
     criteria dictionary and a service call.
@@ -66,6 +62,7 @@ def get_device_ip(device_name):
                             }
 
     try:
+
         phone_query_response = service.selectCmDevice(StateInfo='', CmSelectionCriteria=cm_selection_criteria)
         ip_info = phone_query_response['SelectCmDeviceResult']['CmNodes']['item'][0]['CmDevices']['item'][0]['IPAddress']['item'][0]['IP']
     
@@ -76,4 +73,6 @@ def get_device_ip(device_name):
         print(f)
         show_history()
 
-print (get_device_ip(device_name='SEPAC7E8AB69C2C'))
+device_ip_address = (get_device_ip())
+
+print (device_ip_address)

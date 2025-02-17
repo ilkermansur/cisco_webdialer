@@ -75,4 +75,5 @@ def get_device_ip(device_name=device_name):
 
 device_ip_address = (get_device_ip())
 
-print (device_ip_address)
+print (f'Device : {device_name} \n\
+Device ip address : {device_ip_address}')
